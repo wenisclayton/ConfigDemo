@@ -47,3 +47,14 @@ dotnet add package Microsoft.Extensions.DependencyInjection
 dotnet add package Microsoft.Extensions.Options.DataAnnotations
 dotnet add package Microsoft.Extensions.Options.ConfigurationExtensions
 dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
+```
+
+## Estrutura do Projeto
+
+ConfigDemo/
+├── appsettings.json
+├── customconfig.json
+├── MyAppSettings.cs
+├── MyService.cs
+├── MyServiceWithMonitor.cs
+└── Program.cs
