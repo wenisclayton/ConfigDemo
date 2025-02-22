@@ -4,17 +4,20 @@ Projeto demonstrando diversas abordagens para acessar configurações em uma apl
 
 ## Sumário
 
-- [Introdução](#introdução)
-- [Pré-requisitos](#pré-requisitos)
-- [Pacotes Necessários](#pacotes-necessários)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Arquivos de Configuração](#arquivos-de-configuração)
-- [Implementação](#implementação)
-  - [Acesso Sem Options Pattern](#acesso-sem-options-pattern)
+- [ConfigDemo](#configdemo)
+  - [Sumário](#sumário)
+  - [Introdução](#introdução)
+  - [Pré-requisitos](#pré-requisitos)
+  - [Pacotes Necessários](#pacotes-necessários)
+  - [Estrutura do Projeto](#estrutura-do-projeto)
+  - [Arquivos de Configuração](#arquivos-de-configuração)
+    - [appsettings.json](#appsettingsjson)
+    - [customconfig.json](#customconfigjson)
+  - [Implementação](#implementação)
+      - [Acesso Sem Options Pattern](#acesso-sem-options-pattern)
   - [Acesso Com Options Pattern](#acesso-com-options-pattern)
-- [Execução](#execução)
-- [Conclusão](#conclusão)
-- [Licença](#licença)
+  - [Execução](#execução)
+  - [Conclusão](#conclusão)
 
 ## Introdução
 
@@ -51,10 +54,71 @@ dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
 
 ## Estrutura do Projeto
 
-ConfigDemo/
-├── appsettings.json
-├── customconfig.json
-├── MyAppSettings.cs
-├── MyService.cs
-├── MyServiceWithMonitor.cs
-└── Program.cs
+ConfigDemo/  
+├── src/appsettings.json  
+├── src/customconfig.json  
+├── src/MyAppSettings.cs  
+├── src/MyService.cs  
+├── src/MyServiceWithMonitor.cs  
+└── src/Program.cs  
+
+* **appsettings.json:**: Arquivo principal de configuração.
+* **customconfig.json**: Arquivo opcional para leitura customizada de configurações.
+* **MyAppSettings.cs**: Classe de configuração para Options Pattern e leitura customizada.
+* **MyService.cs**: Serviço demonstrando o uso do Options Pattern via IOptions\<T>\.
+* **MyServiceWithMonitor.cs**: Serviço demonstrando o uso do IOptionsMonitor\<T>\.
+* **Program.cs:**: Contém a implementação das abordagens para acesso às configurações.
+
+## Arquivos de Configuração
+
+### appsettings.json  
+Arquivo de configuração principal que contém a seção **MyAppSettings**:
+
+```c#
+{
+  "MyAppSettings": {
+    "ConnectionString": "Server=myServer;Database=myDB;User Id=myUser;Password=myPassword;",
+    "MaxItems": 50
+  }
+}
+```
+
+### customconfig.json  
+Arquivo opcional que demonstra a leitura customizada de configurações:
+
+```c#
+{
+  "ConnectionString": "Server=myCustomServer;Database=myCustomDB;",
+  "MaxItems": 20
+}
+```
+
+## Implementação
+#### Acesso Sem Options Pattern
+
+No `Program.cs` são implementadas as seguintes abordagens tradicionais:
+
+`IConfiguration`: Leitura direta dos valores através de chaves.
+`Variáveis de Ambiente`: Uso de `Environment.GetEnvironmentVariable` para recuperar configurações definidas no sistema.
+`Arquivo Customizado`: Leitura de um arquivo JSON customizado utilizando `JsonSerializer`.
+
+## Acesso Com Options Pattern
+Utilizando o Options Pattern, as configurações são agrupadas em uma classe fortemente tipada:
+
+* **Classe** `MyAppSettings`: Representa a seção de configurações e inclui data annotations para validação.  
+* **Serviço** `MyService`: Demonstra a injeção de `IOptions<MyAppSettings>` para acesso às configurações.  
+* **Serviço** `MyServiceWithMonitor`: Demonstra o uso do `IOptionsMonitor<MyAppSettings>` para monitorar alterações nas configurações em tempo real.  
+
+
+A configuração do DI (Injeção de Dependência) é realizada utilizando o `ServiceCollection`, registrando os serviços e as opções para possibilitar uma abordagem centralizada e validada.
+
+## Execução
+Para executar o projeto, utilize o seguinte comando:
+```bash
+dotnet run
+```
+
+Durante a execução, o console exibirá os valores de configuração lidos por meio das diferentes abordagens. Se o arquivo appsettings.json for modificado (com reloadOnChange habilitado), o serviço que utiliza IOptionsMonitor<T> detectará e exibirá as alterações.
+
+## Conclusão
+Este projeto demonstra a evolução das técnicas de acesso a configurações em .NET, evidenciando as vantagens do Options Pattern em relação aos métodos tradicionais. Ao utilizar uma abordagem fortemente tipada e validada, o Options Pattern facilita a manutenção e melhora a confiabilidade das configurações em aplicações de qualquer escala.
