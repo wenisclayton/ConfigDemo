@@ -29,21 +29,21 @@ Este projeto tem como objetivo demonstrar diferentes maneiras de acessar configu
 
 Para utilizar os recursos do projeto, instale os seguintes pacotes NuGet:
 
+- **Microsoft.Extensions.Options**
 - **Microsoft.Extensions.Configuration**
 - **Microsoft.Extensions.Configuration.Json**
-- **Microsoft.Extensions.Configuration.EnvironmentVariables**
 - **Microsoft.Extensions.DependencyInjection**
-- **Microsoft.Extensions.Options**
-- **Microsoft.Extensions.Options.ConfigurationExtensions**
 - **Microsoft.Extensions.Options.DataAnnotations**
+- **Microsoft.Extensions.Options.ConfigurationExtensions**
+- **Microsoft.Extensions.Configuration.EnvironmentVariables**
 
 Você pode instalar via linha de comando:
 
 ```bash
+dotnet add package Microsoft.Extensions.Options
 dotnet add package Microsoft.Extensions.Configuration
 dotnet add package Microsoft.Extensions.Configuration.Json
-dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
 dotnet add package Microsoft.Extensions.DependencyInjection
-dotnet add package Microsoft.Extensions.Options
-dotnet add package Microsoft.Extensions.Options.ConfigurationExtensions
 dotnet add package Microsoft.Extensions.Options.DataAnnotations
+dotnet add package Microsoft.Extensions.Options.ConfigurationExtensions
+dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
