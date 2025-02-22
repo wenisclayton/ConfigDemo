@@ -1,0 +1,4 @@
+{
+    "ConnectionString": "Server=myCustomServer;Database=myCustomDB;",
+    "MaxItems": 20
+}
